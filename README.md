@@ -16,7 +16,7 @@ Este projeto é uma aplicação web simples que permite ao usuário adicionar pr
 
 
 ## 📁 Estrutura de Arquivos
-/
+
 ├── index.html
 ├── assets/
 │ ├── css/
