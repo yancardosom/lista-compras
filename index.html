@@ -8,14 +8,8 @@
     <!-- <link rel="stylesheet" href="styles.css"> -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/css/styles.css">
 
-        <style>
-            .card-img-top {
-                height: 250px !important;
-                object-fit: cover !important;
-            }
-
-        </style>
 </head>
 
 <body>
@@ -46,7 +40,10 @@
         </form>
         <div id="product-list" class="row mt-4">
             <div class="col-12">
-                <h2>Produtos</h2>
+                <div class="d-flex justify-content-between align-items-center">
+                    <h2>Produtos</h2>
+                    <button onclick="saveInJsonFile()" class="btn btn-primary mb-3" id="add-product">Salvar</button>
+                </div>
             </div>
            
         </div>
@@ -56,72 +53,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
         crossorigin="anonymous"></script>
-    <script>
-        let products = [];
-
-        function generateRandomId() {
-            return Math.random().toString(36).substr(2,9);
-        }
-
-        function removeProduct(event) {
-            event.preventDefault();// Previne o comportamento padrão do link
-            const productId = event.target.getAttribute("data-id");
-            const productElement = document.getElementById(productId);
-            if (productElement) {
-                productElement.remove();
-            }
-
-            products = products.filter(product => product.id !== productId);
-            console.log(products);
-        
-        }
-        
-        document.getElementById("add-product").addEventListener("click", function (event) {
-            event.preventDefault(); // Previne o envio do formulário
-            const productName = document.getElementById("product-name");
-            const productPrice = document.getElementById("product-price");
-            const storeName = document.getElementById("store-name");
-            const storeUrl = document.getElementById("store-url");
-            const productImage = document.getElementById("product-image");
-            const form = document.querySelector("form");
-            if (!productName.value || !productPrice.value || !storeName.value || !storeUrl.value || !productImage.files.length) {
-                alert("Por favor, preencha todos os campos.");
-                return;
-            }
-
-            const randomId= generateRandomId();
-
-            const productList = document.getElementById("product-list");
-            productList.innerHTML += `
-             <div id="${randomId}" class="col-6 col-md-4 col-lg-3">
-                <div class="card mt-2" style="width: 18rem;">
-                    <img src="${URL.createObjectURL(productImage.files[0])}" class="card-img-top" alt="${productName.value}">
-                    <div class="card-body">
-                        <h5 class="card-title fw-bold">${productName.value}</h5>
-                        <p class="card-text fst-italic">${productPrice.value}</p>
-                        <p class="card-text fst-italic">
-                            <a href="${storeUrl.value}" target="_blank">${storeName.value}</a>
-                        </p>
-                        <a href="#" data-id="${randomId}" onclick="removeProduct(event)" class="btn btn-danger w-100">Remover</a>
-                    </div>
-                </div>
-            </div>
-            `
-            products.push({
-                id: randomId,
-                name: productName.value,
-                price: parseFloat(productPrice.value),
-                store: {
-                    name: storeName.value,
-                    url: storeUrl.value
-                },
-                image: URL.createObjectURL(productImage.files[0])
-            });
-            console.log(products);
-            
-            form.reset(); // Limpa o formulário após adicionar o produto
-        });
-    </script>
+    <script src="assets/js/script.js"></script>
 </body>
 
 </html>
