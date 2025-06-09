@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - BuyZapp</title>
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap">
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+  <style>
+    body {
+      background: #000;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .login-container {
+      background: #111;
+      border-radius: 24px;
+      box-shadow: 0 0 32px 4px #00eaff44;
+      padding: 2.5rem 2rem 2rem 2rem;
+      width: 100%;
+      max-width: 370px;
+      color: #fff;
+    }
+    .login-title {
+      color: #00eaff;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      letter-spacing: 2px;
+    }
+    /* Alinhamento e visual sofisticado dos campos de login/cadastro */
+    .login-container form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+    .mb-3 {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 1.2rem;
+    }
+    .form-label {
+      align-self: flex-start;
+      margin-bottom: 0.4rem;
+      font-size: 1.05rem;
+      letter-spacing: 1px;
+    }
+    .form-control {
+      width: 100%;
+      max-width: 260px;
+      padding: 0.7rem 1.1rem;
+      border-radius: 16px;
+      border: 1.5px solid #222;
+      background: #23272b;
+      color: #fff;
+      font-size: 1.08rem;
+      box-shadow: 0 0 0 0 #00eaff44;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+    }
+    .form-control:focus {
+      border-color: #00eaff;
+      box-shadow: 0 0 8px 2px #00eaff55;
+    }
+    .btn-neon {
+      width: 100%;
+      margin-top: 0.2rem;
+      font-size: 1.08rem;
+      padding: 0.85rem 0;
+      border-radius: 16px;
+    }
+    .toggle-link {
+      color: #00eaff;
+      cursor: pointer;
+      text-decoration: underline;
+      display: block;
+      text-align: center;
+      margin-top: 1rem;
+    }
+    .error-msg {
+      color: #ff4d4d;
+      text-align: center;
+      margin-top: 0.5rem;
+    }
+    .blue-text {
+      color: #00eaff;
+      font-weight: bold;
+      /* Removido o text-shadow neon */
+    }
+    @media (max-width: 480px) {
+      .login-container {
+        padding: 1.5rem 0.5rem 1.5rem 0.5rem;
+        max-width: 98vw;
+      }
+      .form-control {
+        font-size: 1rem;
+        padding: 0.7rem 0.7rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h2 class="login-title">
+      <span style="vertical-align:middle;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" style="margin-right:8px;vertical-align:middle;">
+          <rect width="24" height="24" fill="none"/>
+          <path d="M7 7V6a5 5 0 0 1 10 0v1" stroke="#00eaff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <rect x="3" y="7" width="18" height="14" rx="3" stroke="#00eaff" stroke-width="1.5" fill="#0a192f"/>
+          <circle cx="8.5" cy="12" r="1" fill="#00eaff"/>
+          <circle cx="15.5" cy="12" r="1" fill="#00eaff"/>
+        </svg>
+        <span class="blue-text">B</span><span style="color:#fff;">uy</span><span class="blue-text">Z</span><span style="color:#fff;">app</span>
+      </span>
+    </h2>
+    <form id="login-form">
+      <div class="mb-3">
+        <label for="login-username" class="form-label">Usuário</label>
+        <input type="text" class="form-control" id="login-username" required autocomplete="username">
+      </div>
+      <div class="mb-3">
+        <label for="login-password" class="form-label">Senha</label>
+        <input type="password" class="form-control" id="login-password" required autocomplete="current-password">
+      </div>
+      <button type="submit" class="btn btn-neon">Entrar</button>
+      <div class="d-flex justify-content-between align-items-center" style="margin-top:-0.7rem;">
+        <span class="toggle-link" id="show-register">Não tem cadastro? Criar conta</span>
+        <span class="toggle-link" id="forgot-password" style="color:#ffb300;">Esqueceu a senha?</span>
+      </div>
+      <div class="error-msg" id="login-error"></div>
+    </form>
+    <form id="register-form" style="display:none;">
+      <div class="mb-3">
+        <label for="register-fullname" class="form-label">Nome completo</label>
+        <input type="text" class="form-control" id="register-fullname" required autocomplete="name">
+      </div>
+      <div class="mb-3">
+        <label for="register-email" class="form-label">E-mail</label>
+        <input type="email" class="form-control" id="register-email" required autocomplete="email">
+      </div>
+      <div class="mb-3">
+        <label for="register-phone" class="form-label">Celular (com DDD)</label>
+        <input type="tel" class="form-control" id="register-phone" required pattern="\(\d{2}\) \d{5}-\d{4}" placeholder="(11) 91234-5678" autocomplete="tel">
+      </div>
+      <div class="mb-3">
+        <label for="register-username" class="form-label">Usuário</label>
+        <input type="text" class="form-control" id="register-username" required autocomplete="username">
+      </div>
+      <div class="mb-3">
+        <label for="register-password" class="form-label">Senha</label>
+        <input type="password" class="form-control" id="register-password" required autocomplete="new-password">
+      </div>
+      <button type="submit" class="btn btn-neon">Cadastrar</button>
+      <span class="toggle-link" id="show-login">Já tem conta? Entrar</span>
+      <div class="error-msg" id="register-error"></div>
+    </form>
+  </div>
+  <script>
+    // Alternar entre login e cadastro
+    document.getElementById('show-register').onclick = function() {
+      document.getElementById('login-form').style.display = 'none';
+      document.getElementById('register-form').style.display = 'block';
+    };
+    document.getElementById('show-login').onclick = function() {
+      document.getElementById('register-form').style.display = 'none';
+      document.getElementById('login-form').style.display = 'block';
+    };
+
+    // Login
+    document.getElementById('login-form').onsubmit = async function(e) {
+      e.preventDefault();
+      document.getElementById('login-error').textContent = '';
+      const username = document.getElementById('login-username').value;
+      const password = document.getElementById('login-password').value;
+      try {
+        const res = await fetch('http://localhost:3001/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password })
+        });
+        const data = await res.json();
+        if (res.ok && data.token) {
+          localStorage.setItem('token', data.token);
+          localStorage.setItem('username', username); // Salva o nome do usuário
+          window.location.href = 'index.html';
+        } else {
+          document.getElementById('login-error').textContent = data.erro || 'Erro ao fazer login';
+        }
+      } catch {
+        document.getElementById('login-error').textContent = 'Erro de conexão com o servidor';
+      }
+    };
+
+    // Cadastro
+    document.getElementById('register-form').onsubmit = async function(e) {
+      e.preventDefault();
+      document.getElementById('register-error').textContent = '';
+      const fullname = document.getElementById('register-fullname').value;
+      const email = document.getElementById('register-email').value;
+      const phone = document.getElementById('register-phone').value;
+      const username = document.getElementById('register-username').value;
+      const password = document.getElementById('register-password').value;
+      try {
+        const res = await fetch('http://localhost:3001/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ fullname, email, phone, username, password })
+        });
+        const data = await res.json();
+        if (res.ok && data.id) {
+          localStorage.setItem('fullname', fullname); // Salva nome completo
+          document.getElementById('register-error').style.color = '#00eaff';
+          document.getElementById('register-error').textContent = 'Cadastro realizado! Faça login.';
+          // Exibe mensagem de sucesso em container estilizado
+          document.body.innerHTML = '';
+          const successContainer = document.createElement('div');
+          successContainer.className = 'login-container';
+          successContainer.style.background = '#111';
+          successContainer.style.borderRadius = '24px';
+          successContainer.style.boxShadow = '0 0 32px 4px #00eaff44';
+          successContainer.style.padding = '2.5rem 2rem 2rem 2rem';
+          successContainer.style.width = '100%';
+          successContainer.style.maxWidth = '370px';
+          successContainer.style.color = '#fff';
+          successContainer.style.margin = 'auto';
+          successContainer.style.marginTop = '5vh';
+          successContainer.innerHTML = `
+            <h2 class="login-title" style="color:#00eaff;font-weight:bold;text-align:center;margin-bottom:1.5rem;letter-spacing:2px;">Cadastro realizado!</h2>
+            <p style="text-align:center;font-size:1.1rem;">Sua conta foi criada com sucesso.<br>Redirecionando para o login...</p>
+          `;
+          document.body.style.display = 'flex';
+          document.body.style.alignItems = 'center';
+          document.body.style.justifyContent = 'center';
+          document.body.appendChild(successContainer);
+          setTimeout(() => {
+            window.location.href = 'login.html';
+          }, 1800);
+        } else {
+          document.getElementById('register-error').textContent = data.erro || 'Erro ao cadastrar';
+        }
+      } catch {
+        document.getElementById('register-error').textContent = 'Erro de conexão com o servidor';
+      }
+    };
+
+    // Esqueceu a senha - integração real com backend
+    document.getElementById('forgot-password').onclick = async function() {
+      const email = prompt('Digite seu e-mail cadastrado para redefinir a senha:');
+      if (email) {
+        try {
+          const res = await fetch('http://localhost:3001/forgot-password', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email })
+          });
+          const data = await res.json();
+          if (data.resetLink) {
+            // Exibe o link de redefinição (simulando envio por e-mail)
+            alert('Link de redefinição gerado! Copie e acesse para redefinir sua senha:\n' + data.resetLink);
+          } else {
+            alert(data.msg || 'Se este e-mail estiver cadastrado, você receberá instruções para redefinir sua senha.');
+          }
+        } catch {
+          alert('Erro ao solicitar redefinição de senha.');
+        }
+      }
+    };
+
+    // Tela de redefinição de senha (exibe se houver token na URL)
+    if (window.location.search.includes('token=')) {
+      // Cria dinamicamente um container estilizado mantendo o padrão do site
+      document.body.innerHTML = '';
+      const resetContainer = document.createElement('div');
+      resetContainer.className = 'login-container';
+      resetContainer.style.background = '#111';
+      resetContainer.style.borderRadius = '24px';
+      resetContainer.style.boxShadow = '0 0 32px 4px #00eaff44';
+      resetContainer.style.padding = '2.5rem 2rem 2rem 2rem';
+      resetContainer.style.width = '100%';
+      resetContainer.style.maxWidth = '370px';
+      resetContainer.style.color = '#fff';
+      resetContainer.style.margin = 'auto';
+      resetContainer.style.marginTop = '5vh';
+      resetContainer.innerHTML = `
+        <h2 class="login-title" style="color:#00eaff;font-weight:bold;text-align:center;margin-bottom:1.5rem;letter-spacing:2px;">Redefinir Senha</h2>
+        <form id="reset-form">
+          <div class="mb-3">
+            <label for="reset-password" class="form-label">Nova senha</label>
+            <input type="password" class="form-control" id="reset-password" required autocomplete="new-password">
+          </div>
+          <button type="submit" class="btn btn-neon">Redefinir</button>
+          <div class="error-msg" id="reset-error"></div>
+        </form>
+      `;
+      document.body.style.display = 'flex';
+      document.body.style.alignItems = 'center';
+      document.body.style.justifyContent = 'center';
+      document.body.appendChild(resetContainer);
+      document.getElementById('reset-form').onsubmit = async function(e) {
+        e.preventDefault();
+        document.getElementById('reset-error').textContent = '';
+        const password = document.getElementById('reset-password').value;
+        const token = new URLSearchParams(window.location.search).get('token');
+        try {
+          const res = await fetch('http://localhost:3001/reset-password', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ token, password })
+          });
+          const data = await res.json();
+          if (res.ok) {
+            document.getElementById('reset-error').style.color = '#00eaff';
+            document.getElementById('reset-error').textContent = 'Senha redefinida! Faça login.';
+            setTimeout(() => { window.location.href = 'login.html'; }, 1500);
+          } else {
+            document.getElementById('reset-error').textContent = data.erro || 'Erro ao redefinir senha';
+          }
+        } catch {
+          document.getElementById('reset-error').textContent = 'Erro de conexão com o servidor';
+        }
+      };
+    }
+  </script>
+</body>
+</html>
